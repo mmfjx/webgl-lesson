@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>click-point</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <canvas id="webgl" width="400" height="400"></canvas>
+    <script type="module">
+        import {initShaders} from '../until/initShaders.js';
+        let gl = document.getElementById('webgl').getContext('webgl');
+        if (!gl) {
+            console.log('Failed to get the rendering context for WebGL');
+            // return void 0;
+        }
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        let VSHADER_SOURCE =
+            `void main() {
+                gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
+                gl_PointSize = 10.0;
+            }`;
+        let FSHADER_SOURCE =
+            `void main() {
+                gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+            }`;
+
+        if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+            console.log('Failed to initialize shaders.');
+            // return void 0;
+        }
+
+        gl.drawArrays(gl.POINT, 0, 1);
+    </script>
+</body>
+</html>
